@@ -2,4 +2,108 @@
 title: "Data"
 ---
 
-Data source: xxx
+## Veri Kaynakları ve Seçimi
+
+Projemizin temelini oluşturan veri setleri, şeffaflık ve güvenilirlik hedeflenerek iki ana kaynaktan derlenmiştir:
+
+1.  **TÜİK (Türkiye İstatistik Kurumu):** İl bazında tescilli elektrikli araç sayıları.
+2.  **EPİAŞ ve TEHAD:** İllere göre coğrafi şarj istasyonu (soket) dağılımları.
+
+## Veri Ön İşleme (Preprocessing) ve "Fuzzy Matching"
+
+Veri setlerini birleştirirken karşılaştığımız en büyük engel, kaynaklardaki şehir isimlerinin format uyumsuzluğudur. Bu durumu aşmak ve manuel düzeltme hatalarını sıfıra indirmek için `stringdist` paketi kullanılarak bir **Fuzzy Matching (Bulanık Eşleştirme)** algoritması geliştirilmiştir.
+
+Veri temizleme sürecinde yazdığımız kod aşağıdadır:
+
+```{r data-cleaning, eval=FALSE}
+#| code-fold: true
+#| code-summary: "Veri Temizleme ve Şehir Eşleştirme Kodunu Görmek İçin Tıklayın"
+
+# 1. Paketler
+if (!require("tidyverse")) install.packages("tidyverse")
+if (!require("stringdist")) install.packages("stringdist") # Akıllı eşleştirme için
+library(tidyverse)
+library(stringdist)
+
+# 2. Yollar
+data_path <- "C:/Users/cihan/OneDrive/Desktop/ders/data/data" 
+output_path <- "C:/Users/cihan/OneDrive/Desktop/ders/data/data/clear_data"
+if (!dir.exists(output_path)) dir.create(output_path)
+
+file_list <- list.files(path = data_path, pattern = "^EV_Data_.*\\.csv$", full.names = TRUE)
+
+# 3. TÜRKİYE ŞEHİR REFERANS LİSTESİ (Kusursuz liste)
+official_cities <- c(
+  "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
+  "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale",
+  "Çankırı", "Çorum", "Denizli", "Diyarbakır", "Edirne", "Elazığ", "Erzincan", "Erzurum",
+  "Eskişehir", "Gaziantep", "Giresun", "Gümüşhane", "Hakkari", "Hatay", "Isparta", "Mersin",
+  "İstanbul", "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli",
+  "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla", "Muş",
+  "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt", "Sinop", "Sivas",
+  "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa", "Uşak", "Van", "Yozgat", "Zonguldak",
+  "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan",
+  "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
+)
+
+# 4. ŞEHİR TAMİR MOTORU (Fuzzy Matching - En Güçlü Yöntem)
+clean_and_match_city <- function(messy_city) {
+  # Önce tüm çöpü temizle
+  cleaned <- messy_city %>%
+    str_replace_all("&[[:alpha:]]+;", "") %>% # HTML kodlarını sil
+    str_replace_all("[^[:alnum:] ]", " ") %>% # Harf/Rakam dışı her şeyi boşluk yap
+    str_replace_all("Ã", "Ç") %>% # Yaygın encoding hataları için ön temizlik
+    str_to_lower(locale = "tr") %>%
+    str_squish()
+  
+  # Eğer şehir ismi çok bozuksa (Afyonkara gibi), en yakın resmi ismi bul
+  # stringdist paketi burada "en yakın anlamlı kelimeyi" seçer.
+  match_idx <- amatch(cleaned, str_to_lower(official_cities, locale = "tr"), maxDist = 5)
+  
+  if (!is.na(match_idx)) {
+    return(official_cities[match_idx])
+  } else {
+    return(str_to_title(cleaned, locale = "tr"))
+  }
+}
+
+# 5. Dosya İşleme
+process_file <- function(f) {
+  tarih_val <- str_extract(basename(f), "\\d{4}_\\d{2}")
+  # Encoding bağımsız okuma denemesi
+  d <- read.csv(f, stringsAsFactors = FALSE, check.names = FALSE, fileEncoding = "UTF-8")
+  if (ncol(d) < 5) d <- read.csv(f, stringsAsFactors = FALSE, check.names = FALSE, fileEncoding = "CP1254")
+  
+  # Sütun isimlerini zorla ata
+  if (ncol(d) == 5) {
+    names(d) <- c("sehir", "istasyon", "otomobil", "ev", "oran")
+  } else {
+    names(d) <- c("sehir", "istasyon", "degisim", "otomobil", "ev", "oran")
+  }
+  
+  d %>%
+    as_tibble() %>%
+    mutate(
+      tarih = tarih_val,
+      # Her şehri tek tek resmi liste ile kıyasla ve düzelt
+      sehir = map_chr(sehir, clean_and_match_city),
+      otomobil_sayisi = as.numeric(str_remove_all(otomobil, "[^0-9]")),
+      ev_sayisi = as.numeric(str_remove_all(ev, "[^0-9]")),
+      istasyon_sayisi = as.numeric(str_remove_all(istasyon, "[^0-9]")),
+      istasyon_doluluk_orani = as.numeric(str_replace_all(oran, ",", "."))
+    ) %>%
+    select(tarih, sehir, otomobil_sayisi, ev_sayisi, istasyon_sayisi, istasyon_doluluk_orani)
+}
+
+# 6. Birleştir ve Kurtar
+final_df <- file_list %>%
+  map_dfr(process_file) %>%
+  arrange(sehir, tarih) %>%
+  distinct(tarih, sehir, .keep_all = TRUE)
+```
+
+## Final Dataset
+
+İşlenmiş, temizlenmiş ve analiz/modelleme için `.RData` formatında paketlenmiş nihai veri setimize aşağıdaki bağlantıdan erişilebilir:
+
+[Analiz Veri Setini İndir (.RData)](clear_data/tidy_ev_data_FINAL.RData)
