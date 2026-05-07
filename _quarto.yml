@@ -4,6 +4,7 @@ project:
 
 website:
   title: "Team EV Turkey"
+  favicon: "https://raw.githubusercontent.com/google/material-design-icons/master/png/device/battery_charging_full/materialicons/48dp/1x/baseline_battery_charging_full_black_48dp.png"
   navbar:
     background: "#003366"
     search: true

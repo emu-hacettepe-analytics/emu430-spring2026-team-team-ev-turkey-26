@@ -30,3 +30,77 @@ img, .plotly, .leaflet {
 .code-copy-button {
   background-color: #003366;
 }
+/* Mevcut kodların varsa burada durabilir */
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Inter', sans-serif;
+}
+
+.page-columns .content {
+  background: rgba(255, 255, 255, 0.85); /* Hafif şeffaf beyaz */
+  backdrop-filter: blur(10px); /* Arka planı bulanıklaştırır */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15); /* Daha yumuşak ve derin gölge */
+  padding: 40px;
+}
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-attachment: fixed; /* Sayfa kaydıkça arka plan sabit kalır, derinlik katar */
+}
+a {
+  color: #007bff; /* Elektrik mavisi */
+  transition: all 0.3s ease; /* Fareyle üzerine gelince yumuşak geçiş yapar */
+}
+
+a:hover {
+  color: #00d4ff;
+  text-decoration: none;
+}
+/* Sayfa arka planına derinlik katan gradyan */
+body {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-attachment: fixed;
+}
+
+/* Kartların şeffaf ve modern (Glassmorphism) tasarımı */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7); /* Şeffaflık seviyesi */
+  backdrop-filter: blur(12px); /* Arkadaki rengi bulanıklaştırır */
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  padding: 25px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease; /* Fareyle üzerine gelince yumuşak hareket */
+}
+
+/* Fareyle üzerine gelindiğinde (Hover) efekt */
+.glass-card:hover {
+  transform: translateY(-8px); /* Hafif yukarı kalkar */
+  box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+/* Başlıkların rengini kurumsal lacivert yap */
+.glass-card h4 {
+  color: #003366;
+  margin-bottom: 10px;
+}
+/* Yazıların yukarıdan aşağıya yavaşça süzülerek gelmesi */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.column-screen h1, .column-screen h3 {
+  animation: fadeInDown 1.5s ease-out;
+}

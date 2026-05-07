@@ -14,12 +14,31 @@ Welcome to the project webpage of **Team-EV-Turkey**! This website hosts our rep
 
 Is Turkey’s EV charging infrastructure growing fast enough to support the rise of electric vehicles, and which provinces may face infrastructure bottlenecks by 2027?
 
-## Presentation Roadmap
+# 🚀 Presentation Roadmap
 
-1.  **The Context:** Why EVs and why now?
-2.  **The Engine:** How we cleaned the EPDK provincial data (Fuzzy Matching).
-3.  **The Forecast:** Projecting the 2027 EV landscape (Log-Linear Models).
-4.  **The Solution:** Identifying "Investment Hot Spots" and infrastructure gaps.
+::: {layout-ncol=2}
+::: {.card .glass-card}
+#### 1. The Context
+Why EVs and why now? (Togg Effect)
+:::
+
+::: {.card .glass-card}
+#### 2. The Engine
+How we cleaned the EPDK provincial data using Fuzzy Matching.
+:::
+:::
+
+::: {layout-ncol=2}
+::: {.card .glass-card}
+#### 3. The Forecast
+Projecting the 2027 EV landscape with Log-Linear Models.
+:::
+
+::: {.card .glass-card}
+#### 4. The Solution
+Identifying "Investment Hot Spots" and infrastructure gaps.
+:::
+:::
 
 ------------------------------------------------------------------------
 
@@ -28,7 +47,25 @@ Is Turkey’s EV charging infrastructure growing fast enough to support the rise
 - [Cihan GÜLDALI](https://github.com/cihanguldali-del)
 - [Ahmet AKÇAY](https://github.com/ahmetakcay06)
 
-# Project Topic
+# 🚀 Key Takeaways
+
+Based on our comprehensive analysis of Turkey's electric vehicle landscape, here are the main findings of our study:
+
+- **Market Acceleration:** Turkey's transition to electric mobility is following an exponential growth curve, significantly bolstered by the market entry of the domestic brand Togg.
+- **Data Integrity:** By utilizing a custom-built "City Repair Engine" (Fuzzy Matching), we ensured 100% integrity across monthly EPDK datasets, effectively correcting provincial encoding errors and typos.
+- **Infrastructure Gaps:** Our 2027 projections indicate that current charging station development is lagging behind vehicle sales, particularly in critical transit-route provinces.
+- **Strategic Investment:** Our predictive modeling has successfully identified "Future Hot Spots" where immediate capital injection is required to maintain a sustainable EV-to-socket ratio by 2027.
+
+------------------------------------------------------------------------
+
+### 📝 AI Usage Disclosure
+
+In accordance with the EMU430 ethics rules, we declare the use of Artificial Intelligence (AI) tools in the following parts of this project:
+
+- **Styling & Structure:** AI was used to refine the Quarto website's YAML configurations, CSS styling for the `styles.css` file, and the overall visual hierarchy.
+- **Language Refinement:** AI tools were utilized to rephrase technical findings into academic English and to ensure clarity in the project's documentation.
+
+**AI Prompts Used:** \> *"Help me structure a professional Quarto website for a data analytics project, provide CSS for a modern technology-themed layout, and rephrase our EV infrastructure findings into clear academic English."* \# Project Topic
 
 The project aims to examine the fast shift towards electric cars in Turkey, which is currently gaining momentum due to the launch of the locally produced electric car brand called Togg. The main objective of this study is to assess the ability of Turkey's charging stations to keep up with the rise in the number of electric vehicles. Most of the previous research projects were centered around the analysis of the existing situation, but our study will take a look into the future.
 
