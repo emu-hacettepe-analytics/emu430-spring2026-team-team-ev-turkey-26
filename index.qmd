@@ -1,5 +1,6 @@
 ---
 title: "Team-EV-Turkey"
+subtitle: "Analyzing the Transition to Electric Mobility in Turkey: 2027 Projections"
 sidebar: false 
 ---
 
@@ -7,14 +8,39 @@ This is our project webpage.
 
 Please stay tuned to follow our project activities.
 
-This is our template.
+Welcome to the project webpage of **Team-EV-Turkey**! This website hosts our reproducible workflow and interactive findings for the **EMU430 Data Analytics** course.
+
+## 🎯 The Core Question
+
+> **"Can Türkiye's charging infrastructure keep pace with the exponential surge of EVs triggered by Togg?"**
+
+## 🚀 Presentation Roadmap
+
+1.  **The Context:** Why EVs and why now? (Togg Effect)
+2.  **The Engine:** How we cleaned the EPDK provincial data (Fuzzy Matching).
+3.  **The Forecast:** Projecting the 2027 EV landscape (Log-Linear Models).
+4.  **The Solution:** Identifying "Investment Hot Spots" and infrastructure gaps.
+
+------------------------------------------------------------------------
 
 # Team Members
 
-1.  Cihan GÜLDALI <https://github.com/cihanguldali-del>
-
-2.  
+-   [Cihan GÜLDALI](https://github.com/cihanguldali-del)
 
 # Project Topic
 
+The project aims to examine the fast shift towards electric cars in Turkey, which is currently gaining momentum due to the launch of the locally produced electric car brand called Togg. The main objective of this study is to assess the ability of Turkey's charging stations to keep up with the rise in the number of electric vehicles. Most of the previous research projects were centered around the analysis of the existing situation, but our study will take a look into the future.
+
+-   **Trend and Bottleneck Analysis:** The correlation between the number of electric vehicles and the number of charging sockets is analyzed at the level of each Turkish province in order to identify possible shortages of infrastructure development and its uneven distribution across regions.
+-   **Forecast for 2027:** The prediction model for the share of electric vehicles in the future and additional infrastructure developments required for 2027 are created.
+-   **Future Infrastructure Map:** The heat map of Turkey for 2027 is generated, illustrating not only the current concentration of charging stations but also forecasting the areas of future investments in the sector.
+
 # Data Set
+
+For a proper assessment, our main dataset is comprised of information at the provincial level for both registered electric cars and charging stations, sourced from the Energy Market Regulatory Authority (EPDK).
+
+The integrity of the data is essential. To this end, we have established a reliable data preprocessing pipeline using R programming. This methodology involves:
+
+1.  **Fuzzy Matching for City Names:** A custom "City Repair Engine" has been developed utilizing the stringdist package that performs intelligent matching and correction of the misspellings or corruption of the province names with respect to a list of officially-standardized names.
+2.  **Data Cleaning & Normalization:** The data processing system removes HTML elements, deals with the problem of encoding such as UTF-8/CP1254, and converts strings to numbers.
+3.  **Merging & Consolidation:** The analysis is done by iterative processing of multiple monthly CSVs.

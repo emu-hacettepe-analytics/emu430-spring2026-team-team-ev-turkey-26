@@ -1,36 +1,30 @@
 ---
-title: "Analysis"
+title: "Insights & 2027 Projections"
+format:
+  html:
+    code-fold: true
+    code-tools: true
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
-About this site
+::: callout-important
+## 🚀 Key Executive Takeaways
 
-```{r}
-1 + 1
-```
+-   **Exponential Growth:** Adoption of EVs in Turkey is proceeding exponentially, not linearly. The market is accelerating faster than traditional forecasts.
+-   **Investment Bottlenecks:** Based on our 2027 estimates, there will be a critical shortage of charging stations not only in urban centers but particularly in **transit-route provinces**.
+-   **Actionable Prioritization:** At a benchmark of "50 EVs per station," immediate capital injection is required in the critical (red) zones mapped below to sustain Turkey's EV targets.
+:::
 
-------------------------------------------------------------------------
+## 1. 📊 Correlation Reality Check
 
-------------------------------------------------------------------------
-
----
-title: "Analysis"
----
-
-## Key Takeaways
-
--   **Eksponansiyel Büyüme:** Türkiye'de elektrikli araç adaptasyonu doğrusal (linear) değil, log-lineer (üstel) bir ivmeyle artmaktadır.
--   **Yatırım Darboğazı:** 2027 projeksiyonunda, büyükşehirlerden ziyade özellikle "geçiş güzergahı" üzerinde bulunan illerde ciddi şarj altyapısı açığı beklenmektedir.
--   **Maliyet ve Önceliklendirme:** "İstasyon başına 50 EV" benchmark'ı kullanıldığında, Türkiye'nin 2027 hedeflerini karşılaması için darboğaz haritasında belirtilen kırmızı bölgelere acil yatırım yapılması gerekmektedir.
-
-------------------------------------------------------------------------
-
-## 1. Hazırlık ve Korelasyon Analizi
-
-Elektrikli araç sayısı ile istasyon sayısı arasındaki mevcut ilişkiyi test ediyoruz.
+Before projecting the future, we tested the current relationship between electric vehicles and charging infrastructure.
 
 ```{r setup, warning=FALSE, message=FALSE}
 #| code-fold: true
-#| code-summary: "Kütüphaneler ve Veri Hazırlık Kodunu Göster"
+#| code-summary: "Click to View Libraries & Data Prep Code"
 
 # =============================================================================
 # Turkey EV Infrastructure Analysis — 2027 Forecast & Bottleneck Mapping
@@ -38,17 +32,16 @@ Elektrikli araç sayısı ile istasyon sayısı arasındaki mevcut ilişkiyi tes
 # =============================================================================
 
 # ---- 1. Libraries -----------------------------------------------------------
-required_pkgs <- c("tidyverse", "scales", "rnaturalearth", "rnaturalearthdata", "sf", "stringi", "leaflet")
+required_pkgs <- c("tidyverse", "scales", "rnaturalearth", "rnaturalearthdata",
+                   "sf", "stringi", "leaflet")
 for (pkg in required_pkgs) {
   if (!require(pkg, character.only = TRUE)) {
-    # İŞTE SİHİRLİ DOKUNUŞ BURASI: repos adresini ekledik
-    install.packages(pkg, repos = "https://cloud.r-project.org") 
+    install.packages(pkg, repos = "[https://cloud.r-project.org](https://cloud.r-project.org)")
     library(pkg, character.only = TRUE)
   }
 }
 
 # ---- 2. Load data -----------------------------------------------------------
-# GitHub/Quarto uyumluluğu için lokal yol yerine relative path kullanılmıştır.
 load("clear_data/tidy_ev_data_FINAL.RData")
 
 # ---- 3. Helper: normalize province names for joining ------------------------
@@ -70,6 +63,19 @@ analysis_ready <- final_df |>
   ) |>
   arrange(sehir, date)
 
+# ---- 4.5 Hotfix: source-data anomaly in November 2025 -----------------------
+analysis_ready <- analysis_ready |>
+  group_by(sehir) |>
+  arrange(date) |>
+  mutate(
+    ev_sayisi = if_else(
+      ev_sayisi < lag(ev_sayisi) * 0.5 & ev_sayisi < lead(ev_sayisi) * 0.5,
+      round((lag(ev_sayisi) + lead(ev_sayisi)) / 2),
+      ev_sayisi
+    )
+  ) |>
+  ungroup()
+
 # ---- 5. Correlation: EV adoption vs. station investment ---------------------
 global_cor <- cor(analysis_ready$ev_sayisi,
                   analysis_ready$istasyon_sayisi,
@@ -78,17 +84,17 @@ cat("\n--- EVIDENCE ---\n")
 cat("Correlation between EV count and station count:", round(global_cor, 4), "\n")
 ```
 
-Görüldüğü üzere elde edilen yüksek korelasyon, istasyon yatırımlarının doğrudan pazar talebini takip ettiğini kanıtlamaktadır.
+> **Insight:** A high correlation proves that current station investments reactively follow market demand. **Our goal is to shift this from reactive to proactive.**
 
-## 2. Pazar Büyüme Trendi
+## 2. 📈 Market Growth Trend (Top 5 Hubs)
 
-Türkiye'de en çok elektrikli araca sahip ilk 5 ilin zamana bağlı büyüme grafiği incelendiğinde, büyümenin üstel olduğu net bir şekilde görülmektedir.
+When examining the time-series growth chart of the top 5 provinces, the exponential curve is undeniable.
 
 ```{r trend-plot, warning=FALSE, message=FALSE}
 #| code-fold: true
-#| code-summary: "Trend Analizi Kodunu Göster"
+#| code-summary: "Click to View Trend Analysis Code"
 
-# ---- 7. Latest snapshot per province ----------------------------------------
+# ---- Latest snapshot per province -------------------------------------------
 latest_snapshot <- analysis_ready |>
   group_by(sehir, province_key) |>
   filter(date == max(date)) |>
@@ -98,7 +104,7 @@ latest_snapshot <- analysis_ready |>
     .groups = "drop"
   )
 
-# ---- 10. PLOT 1: EV growth trend in major cities ----------------------------
+# ---- Shared theme -----------------------------------------------------------
 theme_ev <- function() {
   theme_minimal(base_size = 12) +
     theme(
@@ -110,6 +116,7 @@ theme_ev <- function() {
     )
 }
 
+# ---- PLOT 1: EV growth trend in major cities --------------------------------
 top_5_cities <- latest_snapshot |>
   slice_max(current_evs, n = 5) |>
   pull(sehir)
@@ -125,22 +132,28 @@ p1 <- ggplot(analysis_ready |> filter(sehir %in% top_5_cities),
     subtitle = "Monthly registered electric vehicles",
     x        = NULL,
     y        = "Registered EVs",
-    caption  = "Source: TUIK"
+    caption  = "Source: EPDK"
   ) +
   theme_ev()
 
 print(p1)
 ```
 
-## 3. Yatırım ve Darboğaz Analizi (2027 Projeksiyonu)
+## 3. 🎯 2027 Projections & Investment Gaps
 
-Log-lineer model kullanarak 2027 yılı EV sayısını tahmin ettik ve ideal oran olan "50 araç/istasyon" benchmark'ı üzerinden il bazlı yatırım açığını belirledik.
+We forecasted the 2027 EV count using a **Log-Linear Model** and identified provincial investment gaps based on an optimal benchmark of **50 EVs per station**.
+
+| Province Tier | Action Required by 2027 |
+|:---|:---|
+| 🔴 **Critical Risk** | Immediate capital injection; infrastructure is severely lagging. |
+| 🟠 **High Risk** | Infrastructure expansion must double to meet forecasted demand. |
+| 🟢 **Adequate** | Current growth pace is sufficient. |
 
 ```{r forecast-plot, warning=FALSE, message=FALSE}
 #| code-fold: true
-#| code-summary: "2027 Tahminleme ve Darboğaz Kodunu Göster"
+#| code-summary: "Click to View 2027 Forecast & Gap Analysis Code"
 
-# ---- 6. Forecast EVs to 2027 ------------------------------------------------
+# ---- Forecast EVs to 2027 ---------------------------------------------------
 target_date_num <- as.numeric(as.Date("2027-01-01"))
 
 forecast_2027 <- analysis_ready |>
@@ -148,11 +161,13 @@ forecast_2027 <- analysis_ready |>
   group_modify(~{
     df <- .x
     if (nrow(df) < 3 || length(unique(df$ev_sayisi)) < 2) {
-      return(tibble(ev_2027_linear = NA_real_, ev_2027_loglin = NA_real_, cagr_pct = NA_real_))
+      return(tibble(ev_2027_linear = NA_real_,
+                    ev_2027_loglin = NA_real_,
+                    cagr_pct       = NA_real_))
     }
     lin <- lm(ev_sayisi ~ as.numeric(date), data = df)
     pred_lin <- as.numeric(predict(lin, newdata = data.frame(date = target_date_num)))
-    
+
     if (any(df$ev_sayisi <= 0)) {
       pred_log <- NA_real_; cagr <- NA_real_
     } else {
@@ -168,7 +183,7 @@ forecast_2027 <- analysis_ready |>
   ungroup() |>
   mutate(ev_2027 = coalesce(ev_2027_loglin, ev_2027_linear))
 
-# ---- 8. Priority scoring ----------------------------------------------------
+# ---- Priority scoring -------------------------------------------------------
 TARGET_EV_PER_STATION <- 50
 
 priority_table <- forecast_2027 |>
@@ -183,23 +198,12 @@ priority_table <- forecast_2027 |>
       bottleneck_ratio_2027 > 50                    ~ "Medium",
       TRUE                                          ~ "Adequate"
     ),
-    priority_tier = factor(priority_tier, levels = c("Critical", "High", "Medium", "Adequate"))
+    priority_tier = factor(priority_tier,
+                           levels = c("Critical", "High", "Medium", "Adequate"))
   ) |>
   arrange(desc(investment_gap))
 
-# ---- Senaryo Analizi Modülü ----
-priority_table_scenarios <- forecast_2027 |>
-  mutate(
-    ev_2027_cons = ev_2027_linear,
-    ev_2027_base = ev_2027_loglin,
-    ev_2027_aggr = ev_2027_loglin * 1.4
-  ) |>
-  pivot_longer(cols = starts_with("ev_2027_"), 
-               names_to = "scenario", 
-               values_to = "predicted_evs") |>
-  mutate(scenario = str_remove(scenario, "ev_2027_"))
-
-# ---- 11. PLOT 2: Supply-vs-demand gap (dumbbell chart) ----------------------
+# ---- PLOT 2: Supply-vs-demand gap (dumbbell chart) --------------------------
 gap_plot_data <- priority_table |>
   slice_max(investment_gap, n = 15) |>
   mutate(sehir = fct_reorder(sehir, investment_gap))
@@ -223,7 +227,7 @@ p2 <- ggplot(gap_plot_data) +
                       TARGET_EV_PER_STATION, " EVs per station"),
     x        = "Number of charging stations",
     y        = NULL,
-    caption  = "Forecast: log-linear model on monthly TUIK data"
+    caption  = "Forecast: log-linear model on monthly EPDK data"
   ) +
   theme_ev() +
   theme(legend.position = "top")
@@ -231,15 +235,19 @@ p2 <- ggplot(gap_plot_data) +
 print(p2)
 ```
 
-## 4. 2027 Türkiye Darboğaz ve Finansal Haritası
+## 4. 🗺️ Turkey 2027: The Interactive Heatmap
 
-Aşağıdaki harita hem statik risk bölgelerini hem de interaktif olarak farenizle üzerine geldiğinizde yatırım ihtiyaçlarını (USD bazında) göstermektedir.
+This is where the investments must go. The static map shows the risk distribution, while the **Interactive Map** below calculates the exact USD required to close the gap in each province *(assuming a \$50k cost per DC fast charger)*.
+
+::: callout-note
+**Hover Instructions:** Use your mouse to explore the interactive map below to view specific 2027 EV forecasts, missing stations, and required capital per province.
+:::
 
 ```{r map-plots, warning=FALSE, message=FALSE}
 #| code-fold: true
-#| code-summary: "Isı Haritası ve İnteraktif Leaflet Kodunu Göster"
+#| code-summary: "Click to View Spatial & Interactive Mapping Code"
 
-# ---- 12. PLOT 3: Turkey priority heat map -----------------------------------
+# ---- Build spatial layer ----------------------------------------------------
 tr_map <- ne_states(country = "turkey", returnclass = "sf") |>
   mutate(
     province_raw = name,
@@ -247,13 +255,13 @@ tr_map <- ne_states(country = "turkey", returnclass = "sf") |>
   )
 
 manual_fixes <- tribble(
-  ~ne_key,       ~tuik_key,
-  "afyon",       "afyonkarahisar",
-  "kmaras",      "kahramanmaras",
-  "kahramanmars","kahramanmaras",
-  "icel",        "mersin",
-  "urfa",        "sanliurfa",
-  "zinguldak",   "zonguldak"
+  ~ne_key,        ~tuik_key,
+  "afyon",        "afyonkarahisar",
+  "kmaras",       "kahramanmaras",
+  "kahramanmars", "kahramanmaras",
+  "icel",         "mersin",
+  "urfa",         "sanliurfa",
+  "zinguldak",    "zonguldak"
 )
 
 tr_map <- tr_map |>
@@ -264,6 +272,7 @@ tr_map <- tr_map |>
 map_plot_data <- tr_map |>
   left_join(priority_table, by = "province_key")
 
+# ---- PLOT 3: Static heat map ------------------------------------------------
 map_plot_data_cap <- map_plot_data |>
   mutate(bottleneck_capped = pmin(bottleneck_ratio_2027, 200))
 
@@ -286,8 +295,8 @@ p3 <- ggplot(map_plot_data_cap) +
 
 print(p3)
 
-# ---- 12.5 SEVİYE ATLAMA: Finansal Simülasyon ve İnteraktif Harita (Leaflet) ---
-AVG_STATION_COST_USD <- 50000 
+# ---- Interactive Leaflet map ------------------------------------------------
+AVG_STATION_COST_USD <- 50000
 
 map_plot_data_interactive <- map_plot_data |>
   mutate(
@@ -297,33 +306,36 @@ map_plot_data_interactive <- map_plot_data |>
   )
 
 pal <- colorBin(
-  palette = "YlOrRd", 
-  domain = map_plot_data_interactive$investment_gap, 
-  bins = c(0, 10, 50, 100, 250, 500, Inf) 
+  palette  = "YlOrRd",
+  domain   = map_plot_data_interactive$investment_gap,
+  bins     = c(0, 10, 50, 100, 250, 500, Inf)
 )
 
 interactive_map <- leaflet(data = map_plot_data_interactive) |>
-  addProviderTiles(providers$CartoDB.Positron) |> 
+  addProviderTiles(providers$CartoDB.Positron) |>
   addPolygons(
-    fillColor = ~pal(investment_gap),
-    weight = 1,
-    opacity = 1,
-    color = "white",
-    dashArray = "3",
+    fillColor   = ~pal(investment_gap),
+    weight      = 1,
+    opacity     = 1,
+    color       = "white",
+    dashArray   = "3",
     fillOpacity = 0.8,
     highlightOptions = highlightOptions(
       weight = 3, color = "#666", dashArray = "", fillOpacity = 0.9, bringToFront = TRUE
     ),
     label = ~paste0(
-      province_raw, 
-      " | 2027 EV Tahmini: ", ev_label, 
-      " | Eksik İstasyon: ", investment_gap,
-      " | Gereken Yatırım: ", cost_label
+      province_raw,
+      " | 2027 EV Forecast: ", ev_label,
+      " | Missing Stations: ", investment_gap,
+      " | Required Investment: ", cost_label
     ) |> lapply(htmltools::HTML)
   ) |>
   addLegend(
-    pal = pal, values = ~investment_gap, opacity = 0.7, 
-    title = "2027 Eksik İstasyon<br>(Yatırım Fırsatı)", position = "bottomright"
+    pal      = pal,
+    values   = ~investment_gap,
+    opacity  = 0.7,
+    title    = "2027 Missing Stations<br>(Investment Opportunity)",
+    position = "bottomright"
   )
 
 print(interactive_map)
