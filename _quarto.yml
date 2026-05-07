@@ -5,6 +5,7 @@ project:
 website:
   title: "Team EV Turkey"
   navbar:
+    background: "#003366"
     search: true
     left:
       - text: "Home"
@@ -34,7 +35,7 @@ format:
     code-fold: true
     code-tools: true
     theme: 
-      light: cosmo 
+      light: lux 
       dark: slate
     css: styles.css
 
