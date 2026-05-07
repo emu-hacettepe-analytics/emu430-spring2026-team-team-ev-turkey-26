@@ -10,13 +10,13 @@ Please stay tuned to follow our project activities.
 
 Welcome to the project webpage of **Team-EV-Turkey**! This website hosts our reproducible workflow and interactive findings for the **EMU430 Data Analytics** course.
 
-## 🎯 The Core Question
+## The Core Question
 
-> **"Can Türkiye's charging infrastructure keep pace with the exponential surge of EVs triggered by Togg?"**
+**Regional Bottleneck Identification:** By mapping EV numbers against the number of charging sockets per province, where are the most significant supply/demand discrepancies and infrastructure gaps located?
 
-## 🚀 Presentation Roadmap
+## Presentation Roadmap
 
-1.  **The Context:** Why EVs and why now? (Togg Effect)
+1.  **The Context:** Why EVs and why now?
 2.  **The Engine:** How we cleaned the EPDK provincial data (Fuzzy Matching).
 3.  **The Forecast:** Projecting the 2027 EV landscape (Log-Linear Models).
 4.  **The Solution:** Identifying "Investment Hot Spots" and infrastructure gaps.
@@ -25,15 +25,16 @@ Welcome to the project webpage of **Team-EV-Turkey**! This website hosts our rep
 
 # Team Members
 
--   [Cihan GÜLDALI](https://github.com/cihanguldali-del)
+- [Cihan GÜLDALI](https://github.com/cihanguldali-del)
+- [Ahmet AKÇAY](https://github.com/ahmetakcay06)
 
 # Project Topic
 
 The project aims to examine the fast shift towards electric cars in Turkey, which is currently gaining momentum due to the launch of the locally produced electric car brand called Togg. The main objective of this study is to assess the ability of Turkey's charging stations to keep up with the rise in the number of electric vehicles. Most of the previous research projects were centered around the analysis of the existing situation, but our study will take a look into the future.
 
--   **Trend and Bottleneck Analysis:** The correlation between the number of electric vehicles and the number of charging sockets is analyzed at the level of each Turkish province in order to identify possible shortages of infrastructure development and its uneven distribution across regions.
--   **Forecast for 2027:** The prediction model for the share of electric vehicles in the future and additional infrastructure developments required for 2027 are created.
--   **Future Infrastructure Map:** The heat map of Turkey for 2027 is generated, illustrating not only the current concentration of charging stations but also forecasting the areas of future investments in the sector.
+- **Trend and Bottleneck Analysis:** The correlation between the number of electric vehicles and the number of charging sockets is analyzed at the level of each Turkish province in order to identify possible shortages of infrastructure development and its uneven distribution across regions.
+- **Forecast for 2027:** The prediction model for the share of electric vehicles in the future and additional infrastructure developments required for 2027 are created.
+- **Future Infrastructure Map:** The heat map of Turkey for 2027 is generated, illustrating not only the current concentration of charging stations but also forecasting the areas of future investments in the sector.
 
 # Data Set
 

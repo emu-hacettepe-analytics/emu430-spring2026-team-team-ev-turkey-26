@@ -14,7 +14,7 @@ execute:
 
 To ensure transparency and reliability, the foundational dataset for our project was compiled from a unified official source:
 
--   **EPDK (Energy Market Regulatory Authority):** Provincial-level data containing the number of registered electric vehicles and the geographical distribution of charging stations (sockets).
+- **EPDK (Energy Market Regulatory Authority):** Provincial-level data containing the number of registered electric vehicles and the geographical distribution of charging stations (sockets).
 
 ## 🛠️ Preprocessing & "Fuzzy Matching"
 
@@ -22,9 +22,9 @@ The most significant challenge we faced while merging raw datasets was the **for
 
 To solve this without introducing human error, we built a **"City Repair" Engine**:
 
--   **The Problem:** Corrupted data entries like "Afyonkara" or "Istanbul ".
--   **The Solution:** Fuzzy Matching Algorithm.
--   **The Tool:** The `stringdist` package in R.
+- **The Problem:** Corrupted data entries like "Afyonkara" or "Istanbul ".
+- **The Solution:** Fuzzy Matching Algorithm.
+- **The Tool:** The `stringdist` package in R.
 
 ::: callout-tip
 ### Technical Insight
