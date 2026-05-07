@@ -10,15 +10,15 @@
     "objectID": "index.html#the-core-question",
     "href": "index.html#the-core-question",
     "title": "Team-EV-Turkey",
-    "section": "🎯 The Core Question",
-    "text": "🎯 The Core Question\n\n“Can Türkiye’s charging infrastructure keep pace with the exponential surge of EVs triggered by Togg?”"
+    "section": "The Core Question",
+    "text": "The Core Question\nRegional Bottleneck Identification: By mapping EV numbers against the number of charging sockets per province, where are the most significant supply/demand discrepancies and infrastructure gaps located?"
   },
   {
     "objectID": "index.html#presentation-roadmap",
     "href": "index.html#presentation-roadmap",
     "title": "Team-EV-Turkey",
-    "section": "🚀 Presentation Roadmap",
-    "text": "🚀 Presentation Roadmap\n\nThe Context: Why EVs and why now? (Togg Effect)\nThe Engine: How we cleaned the EPDK provincial data (Fuzzy Matching).\nThe Forecast: Projecting the 2027 EV landscape (Log-Linear Models).\nThe Solution: Identifying “Investment Hot Spots” and infrastructure gaps."
+    "section": "Presentation Roadmap",
+    "text": "Presentation Roadmap\n\nThe Context: Why EVs and why now?\nThe Engine: How we cleaned the EPDK provincial data (Fuzzy Matching).\nThe Forecast: Projecting the 2027 EV landscape (Log-Linear Models).\nThe Solution: Identifying “Investment Hot Spots” and infrastructure gaps."
   },
   {
     "objectID": "analysis.html",
