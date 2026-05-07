@@ -3,34 +3,39 @@ project:
   output-dir: docs
 
 website:
-  title: "Team-EV-Turkey"
+  title: "Team EV Turkey"
   navbar:
     search: true
     left:
-      - text: Home
+      - text: "Home"
+        icon: house
         href: index.qmd
-      - text: Data
+      - text: "Data"
+        icon: table
         href: data.qmd
-      - text: Analysis
+      - text: "Analysis"
+        icon: bar-chart
         href: analysis.qmd
     tools:
       - icon: github
         href: https://github.com/emu-hacettepe-analytics/emu430-fall2024-team-team-ev-turkey
-
   page-navigation: true
   back-to-top-navigation: true
   page-footer:
-    center: "Hacettepe IE - EMU 430 - Fall 2024 | Team-EV-Turkey" 
+    center: "Hacettepe IE - EMU 430 - Fall 2024 | Team EV Turkey"
     border: true
 
 format:
   html:
     toc: true
+    toc-title: "İçindekiler"
     toc-location: left
+    smooth-scroll: true
     code-fold: true
+    code-tools: true
     theme: 
-      light: simplex 
-      dark: cyborg
+      light: cosmo 
+      dark: slate
     css: styles.css
 
 editor: visual
