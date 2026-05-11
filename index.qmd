@@ -15,7 +15,7 @@ format:
     margin-top: 2cm
     margin-bottom: 2cm
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
 ---
