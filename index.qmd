@@ -8,7 +8,16 @@ This is our project webpage.
 
 Please stay tuned to follow our project activities.
 
-Welcome to the project webpage of **Team-EV-Turkey**! This website hosts our reproducible workflow and interactive findings for the **EMU430 Data Analytics** course.
+Welcome to the project webpage of **Team-EV-Turkey**! This website hosts our reproducible workflow and interactive findings for the **EMU430 Data Analytics** course.\
+
+::::::::: {style="text-align: center; margin: 30px 0;"}
+<video style="width: 100%; max-width: 900px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);" controls>
+
+<source src="images/son.mp4" type="video/mp4">
+
+Tarayıcınız video etiketini desteklemiyor. </video>
+
+</div>
 
 ## The Core Question
 
@@ -16,45 +25,49 @@ Is Turkey’s EV charging infrastructure growing fast enough to support the rise
 
 # 🚀 Presentation Roadmap
 
-::: {layout-ncol=2}
+::::: {layout-ncol="2"}
 ::: {.card .glass-card}
 #### 1. The Context
+
 Why EVs and why now? (Togg Effect)
 :::
 
 ::: {.card .glass-card}
 #### 2. The Engine
+
 How we cleaned the EPDK provincial data using Fuzzy Matching.
 :::
-:::
+:::::
 
-::: {layout-ncol=2}
+::::: {layout-ncol="2"}
 ::: {.card .glass-card}
 #### 3. The Forecast
+
 Projecting the 2027 EV landscape with Log-Linear Models.
 :::
 
 ::: {.card .glass-card}
 #### 4. The Solution
+
 Identifying "Investment Hot Spots" and infrastructure gaps.
 :::
-:::
+:::::
 
 ------------------------------------------------------------------------
 
 # Team Members
 
-- [Cihan GÜLDALI](https://github.com/cihanguldali-del)
-- [Ahmet AKÇAY](https://github.com/ahmetakcay06)
+-   [Cihan GÜLDALI](https://github.com/cihanguldali-del)
+-   [Ahmet AKÇAY](https://github.com/ahmetakcay06)
 
 # 🚀 Key Takeaways
 
 Based on our comprehensive analysis of Turkey's electric vehicle landscape, here are the main findings of our study:
 
-- **Market Acceleration:** Turkey's transition to electric mobility is following an exponential growth curve, significantly bolstered by the market entry of the domestic brand Togg.
-- **Data Integrity:** By utilizing a custom-built "City Repair Engine" (Fuzzy Matching), we ensured 100% integrity across monthly EPDK datasets, effectively correcting provincial encoding errors and typos.
-- **Infrastructure Gaps:** Our 2027 projections indicate that current charging station development is lagging behind vehicle sales, particularly in critical transit-route provinces.
-- **Strategic Investment:** Our predictive modeling has successfully identified "Future Hot Spots" where immediate capital injection is required to maintain a sustainable EV-to-socket ratio by 2027.
+-   **Market Acceleration:** Turkey's transition to electric mobility is following an exponential growth curve, significantly bolstered by the market entry of the domestic brand Togg.
+-   **Data Integrity:** By utilizing a custom-built "City Repair Engine" (Fuzzy Matching), we ensured 100% integrity across monthly EPDK datasets, effectively correcting provincial encoding errors and typos.
+-   **Infrastructure Gaps:** Our 2027 projections indicate that current charging station development is lagging behind vehicle sales, particularly in critical transit-route provinces.
+-   **Strategic Investment:** Our predictive modeling has successfully identified "Future Hot Spots" where immediate capital injection is required to maintain a sustainable EV-to-socket ratio by 2027.
 
 ------------------------------------------------------------------------
 
@@ -62,16 +75,16 @@ Based on our comprehensive analysis of Turkey's electric vehicle landscape, here
 
 In accordance with the EMU430 ethics rules, we declare the use of Artificial Intelligence (AI) tools in the following parts of this project:
 
-- **Styling & Structure:** AI was used to refine the Quarto website's YAML configurations, CSS styling for the `styles.css` file, and the overall visual hierarchy.
-- **Language Refinement:** AI tools were utilized to rephrase technical findings into academic English and to ensure clarity in the project's documentation.
+-   **Styling & Structure:** AI was used to refine the Quarto website's YAML configurations, CSS styling for the `styles.css` file, and the overall visual hierarchy.
+-   **Language Refinement:** AI tools were utilized to rephrase technical findings into academic English and to ensure clarity in the project's documentation.
 
 **AI Prompts Used:** \> *"Help me structure a professional Quarto website for a data analytics project, provide CSS for a modern technology-themed layout, and rephrase our EV infrastructure findings into clear academic English."* \# Project Topic
 
 The project aims to examine the fast shift towards electric cars in Turkey, which is currently gaining momentum due to the launch of the locally produced electric car brand called Togg. The main objective of this study is to assess the ability of Turkey's charging stations to keep up with the rise in the number of electric vehicles. Most of the previous research projects were centered around the analysis of the existing situation, but our study will take a look into the future.
 
-- **Trend and Bottleneck Analysis:** The correlation between the number of electric vehicles and the number of charging sockets is analyzed at the level of each Turkish province in order to identify possible shortages of infrastructure development and its uneven distribution across regions.
-- **Forecast for 2027:** The prediction model for the share of electric vehicles in the future and additional infrastructure developments required for 2027 are created.
-- **Future Infrastructure Map:** The heat map of Turkey for 2027 is generated, illustrating not only the current concentration of charging stations but also forecasting the areas of future investments in the sector.
+-   **Trend and Bottleneck Analysis:** The correlation between the number of electric vehicles and the number of charging sockets is analyzed at the level of each Turkish province in order to identify possible shortages of infrastructure development and its uneven distribution across regions.
+-   **Forecast for 2027:** The prediction model for the share of electric vehicles in the future and additional infrastructure developments required for 2027 are created.
+-   **Future Infrastructure Map:** The heat map of Turkey for 2027 is generated, illustrating not only the current concentration of charging stations but also forecasting the areas of future investments in the sector.
 
 # Data Set
 
@@ -82,3 +95,4 @@ The integrity of the data is essential. To this end, we have established a relia
 1.  **Fuzzy Matching for City Names:** A custom "City Repair Engine" has been developed utilizing the stringdist package that performs intelligent matching and correction of the misspellings or corruption of the province names with respect to a list of officially-standardized names.
 2.  **Data Cleaning & Normalization:** The data processing system removes HTML elements, deals with the problem of encoding such as UTF-8/CP1254, and converts strings to numbers.
 3.  **Merging & Consolidation:** The analysis is done by iterative processing of multiple monthly CSVs.
+:::::::::

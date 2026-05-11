@@ -13,9 +13,9 @@ execute:
 ::: callout-important
 ## 🚀 Key Executive Takeaways
 
-- **Exponential Growth:** Adoption of EVs in Turkey is proceeding exponentially, not linearly. The market is accelerating faster than traditional forecasts.
-- **Investment Bottlenecks:** Based on our 2027 estimates, there will be a critical shortage of charging stations not only in urban centers but particularly in **transit-route provinces**.
-- **Actionable Prioritization:** At a benchmark of "50 EVs per station," immediate capital injection is required in the critical (red) zones mapped below to sustain Turkey's EV targets.
+-   **Exponential Growth:** Adoption of EVs in Turkey is proceeding exponentially, not linearly. The market is accelerating faster than traditional forecasts.
+-   **Investment Bottlenecks:** Based on our 2027 estimates, there will be a critical shortage of charging stations not only in urban centers but particularly in **transit-route provinces**.
+-   **Actionable Prioritization:** At a benchmark of "50 EVs per station," immediate capital injection is required in the critical (red) zones mapped below to sustain Turkey's EV targets.
 :::
 
 ## 1. 📊 Correlation Reality Check
@@ -144,7 +144,7 @@ print(p1)
 We forecasted the 2027 EV count using a **Log-Linear Model** and identified provincial investment gaps based on an optimal benchmark of **50 EVs per station**.
 
 | Province Tier | Action Required by 2027 |
-|:-----------------------------------|:-----------------------------------|
+|:---|:---|
 | 🔴 **Critical Risk** | Immediate capital injection; infrastructure is severely lagging. |
 | 🟠 **High Risk** | Infrastructure expansion must double to meet forecasted demand. |
 | 🟢 **Adequate** | Current growth pace is sufficient. |
