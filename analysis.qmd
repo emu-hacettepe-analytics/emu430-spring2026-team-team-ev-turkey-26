@@ -4,6 +4,14 @@ format:
   html:
     code-fold: true
     code-tools: true
+  pdf:
+    colorlinks: true
+    papersize: a4
+    fontsize: 11pt
+    margin-left: 2cm
+    margin-right: 2cm
+    margin-top: 2cm
+    margin-bottom: 2cm
 execute:
   echo: true
   warning: false
@@ -144,7 +152,7 @@ print(p1)
 We forecasted the 2027 EV count using a **Log-Linear Model** and identified provincial investment gaps based on an optimal benchmark of **50 EVs per station**.
 
 | Province Tier | Action Required by 2027 |
-|:---|:---|
+|:-----------------------------------|:-----------------------------------|
 | 🔴 **Critical Risk** | Immediate capital injection; infrastructure is severely lagging. |
 | 🟠 **High Risk** | Infrastructure expansion must double to meet forecasted demand. |
 | 🟢 **Adequate** | Current growth pace is sufficient. |

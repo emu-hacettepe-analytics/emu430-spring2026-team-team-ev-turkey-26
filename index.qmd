@@ -1,7 +1,23 @@
 ---
 title: "Team-EV-Turkey"
 subtitle: "Analyzing the Transition to Electric Mobility in Turkey: 2027 Projections"
-sidebar: false 
+sidebar: false
+format:
+  html:
+    code-fold: true
+    code-tools: true
+  pdf:
+    colorlinks: true
+    papersize: a4
+    fontsize: 11pt
+    margin-left: 2cm
+    margin-right: 2cm
+    margin-top: 2cm
+    margin-bottom: 2cm
+execute:
+  echo: true
+  warning: false
+  message: false
 ---
 
 This is our project webpage.
