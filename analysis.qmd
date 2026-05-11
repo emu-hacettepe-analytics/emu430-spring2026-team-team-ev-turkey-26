@@ -348,3 +348,11 @@ interactive_map <- leaflet(data = map_plot_data_interactive) |>
 
 print(interactive_map)
 ```
+
+## References
+
+1. **Energy Market Regulatory Authority (EPDK).** (2025). *Electric Vehicle Charging Infrastructure Report - Turkey.* Retrieved from [epdk.gov.tr](https://www.epdk.gov.tr)
+2. **Turkish Statistical Institute (TUIK).** (2025). *Road Motor Vehicles Statistics, December 2024.* Retrieved from [tuik.gov.tr](https://www.tuik.gov.tr)
+3. **International Energy Agency (IEA).** (2024). *Global EV Outlook 2024: Trends and Projections.*
+4. **TEHAD (Turkish Electric and Hybrid Vehicles Association).** (2025). *Annual EV Market Analysis for Turkey.* Retrieved from [tehad.org](https://tehad.org)
+5. **Quarto Documentation.** (2026). *Creating Interactive Documents with R.* Retrieved from [quarto.org](https://quarto.org)
